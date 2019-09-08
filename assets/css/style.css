@@ -5,11 +5,8 @@ body, html
 
 h2
 {
-    font-family: Georgia, Times, serif;
-    text-align: center;
     font-size: 30px;
-    color: #666666;
-    border: 3px solid #666666;
+    border-bottom: 3px solid #666666;
 }
 
 h6
@@ -26,8 +23,12 @@ h5
 
 h4
 {
+    overflow: hidden;
+    font-size: 22px;
     font-weight: bold;
     margin: auto;
+    height: 30px;
+    color: #000000;
 }
 
 p
@@ -37,6 +38,26 @@ p
     font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
     color: #777777;
     margin-bottom: 30px;
+}
+
+.gem-btn
+{
+    width: 100%;
+}
+
+.gem-div
+{
+    height: 250px;
+    overflow: visible;
+    position: relative;
+}
+
+.score-img
+{
+    position: absolute;
+    opacity: 0;
+    left: 40%;
+    top: 5%;
 }
 
 #page-body
