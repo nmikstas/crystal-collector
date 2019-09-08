@@ -12,6 +12,11 @@ $(document).ready(function()
         losses: 0,
         wins: 0,
 
+        aud0:    document.createElement("audio"),
+        aud1:    document.createElement("audio"),
+        audWin:  document.createElement("audio"),
+        audLose: document.createElement("audio"),
+  
         /*********************************** Object Functions ************************************/
         //Reset the game.
         reset: function()
@@ -93,6 +98,36 @@ $(document).ready(function()
             $('#crystal2').attr('src', 'assets/images/crystal' + this.crystalImageArray[2] + '.png');
             $('#crystal3').attr('src', 'assets/images/crystal' + this.crystalImageArray[3] + '.png');
         },
+
+        //Play a random crystal sound.
+        playSound: function()
+        {
+            var rand = Math.floor(Math.random() * 2);
+            if(!rand)
+            {
+                this.aud0.play();
+            }
+            else
+            {
+                this.aud1.play();
+            }
+        },
+
+        //Stop any playing audio.
+        stopAudio: function()
+        {
+            this.aud0.pause();
+            this.aud0.currentTime = 0;
+
+            this.aud1.pause();
+            this.aud1.currentTime = 0;
+
+            this.audWin.pause();
+            this.audWin.currentTime = 0;
+
+            this.audLose.pause();
+            this.audLose.currentTime = 0;
+        }
     };
 
     /************************************ Web Page Functions *************************************/
@@ -100,6 +135,10 @@ $(document).ready(function()
     //Initial function run when page is loaded.
     $(function ()
     {
+        crystalGame.aud0.setAttribute("src", "./assets/sounds/crystal0.mp3");
+        crystalGame.aud1.setAttribute("src", "./assets/sounds/crystal1.mp3");
+        crystalGame.audWin.setAttribute("src", "./assets/sounds/win.mp3");
+        crystalGame.audLose.setAttribute("src", "./assets/sounds/lose.mp3");
         crystalGame.reset();
     });
  
@@ -113,7 +152,7 @@ $(document).ready(function()
         $('.gem-btn').off('click');
 
         //Stop any playing audio.
-        stopAudio();
+        crystalGame.stopAudio();
 
         var id = $(this).attr('value');
         var reInit = false;
@@ -134,9 +173,7 @@ $(document).ready(function()
             $('#wins').animate({fontSize: '30px'}, 100);
             $('#wins').animate({fontSize: '22px'}, 100);
             reInit = true;
-
-            var win = document.getElementById("audwin");
-            win.play();
+            crystalGame.audWin.play();
         }
         //Check if player lost this round.
         else if(crystalGame.currentScore > crystalGame.targetScore)
@@ -147,14 +184,12 @@ $(document).ready(function()
             $('#losses').animate({fontSize: '30px'}, 100);
             $('#losses').animate({fontSize: '22px'}, 100);
             reInit = true;
-
-            var lose = document.getElementById("audlose");
-            lose.play();
+            crystalGame.audLose.play();
         }
 
-        playSound();
+        crystalGame.playSound();
         
-        //Rebind function after after animation is done.
+        //Rebind function after animation is done.
         setTimeout(function() 
         {
             $('.gem-btn').on('click', clickCrystal);
@@ -181,34 +216,6 @@ $(document).ready(function()
         $('#score' + id).animate({top: '-=100px'}, 200);
         $('#score' + id).fadeTo(300, 0);
         $('#score' + id).animate({top: '+=100px'}, 0);
-    }
-
-    //Play a random crystal sound.
-    function playSound()
-    {
-        var rand = Math.floor(Math.random() * 2);
-        var crystal = document.getElementById("aud" + rand);
-        crystal.play();
-    }
-
-    //Stop any playing audio.
-    function stopAudio()
-    {
-        var crystal0 = document.getElementById("aud0");
-        crystal0.pause();
-        crystal0.currentTime = 0;
-
-        var crystal1 = document.getElementById("aud1");
-        crystal1.pause();
-        crystal1.currentTime = 0;
-
-        var win = document.getElementById("audwin");
-        win.pause();
-        win.currentTime = 0;
-
-        var lose = document.getElementById("audlose");
-        lose.pause();
-        lose.currentTime = 0;
     }
 
     //Get reset button click.
