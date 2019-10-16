@@ -103,14 +103,7 @@ $(document).ready(function()
         playSound: function()
         {
             var rand = Math.floor(Math.random() * 2);
-            if(!rand)
-            {
-                this.aud0.play();
-            }
-            else
-            {
-                this.aud1.play();
-            }
+            rand ? this.aud0.play() : this.aud1.play();
         },
 
         //Stop any playing audio.
@@ -157,7 +150,7 @@ $(document).ready(function()
         var id = $(this).attr('value');
         var reInit = false;
 
-        //Anumate the crystals.
+        //Animate the crystals.
         animateScore(id);
 
         //Update the player's score.
@@ -175,6 +168,7 @@ $(document).ready(function()
             reInit = true;
             crystalGame.audWin.play();
         }
+
         //Check if player lost this round.
         else if(crystalGame.currentScore > crystalGame.targetScore)
         {
